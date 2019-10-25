@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div id="home" class="banner-area section-padding">
+        <div class="bg-overlay black"></div>
+        <div class="containter">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="login-form">
+                        <div class="welcome-text" style="padding-top: 120px">
+                            <div class="name-area wow fadeInDown" data-wow-delay="0.2s">ONLY PRIVATE USER</div>
+                            <!-- 로그인 되어있는 경우 -->
+                            {% if user.is_active %}
+                                <h2 class="login-heading mb-4" style="color:white; padding: 50px 0px;"> Welcome, {{ user.username }} </h2>
+                                <a href="{% url 'logout' %}">LOGOUT</a>
+
+                                <!-- 로그인 되어있지 않은 경우 -->
+                            {% else %}
+                                {% if form.errors %}
+                                    <!-- 에러발생시 -->
+                                    <p>Your username and password didn't match. Please try again.</p>
+                                {% endif %}
+                                <!-- 로그인 폼 -->
+                                <div class="login-form">
+                                <form action="{% url 'login' %}" method="post" id="login-form">
+                                {% if next %}
+                                    <input type="hidden" name="next" value="{{ next }}" />
+                                {% endif %}
+                                {% if next %}
+                                    {% if user.is_authenticated %}
+                                        <p>Your account doesn't have access to this page. To proceed,
+                                            please login with an account that has access.</p>
+                                    {% else %}
+                                        <p>Please login to see this page.</p>
+                                    {% endif %}
+                                {% endif %}
+                                <!-- 로그인 폼 -->
+                                <form method="post" action="{% url 'login' %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input type="text" id="{{ form.username.id_for_label }}"
+                                           name="{{ form.username.html_name }}"
+                                           class="form-control" placeholder="ID" required="required">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" id="{{ form.password.id_for_label }}"
+                                           name="{{ form.password.html_name }}"
+                                           class="form-control" placeholder="Password" required="required">
+                                </div>
+                                <div class="form-group">
+                                    <a href="#" onclick="document.getElementById('login-form').submit();" class="c-btn btn-block">LOGIN</a>
+                                </div>
+                            {% endif %}
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

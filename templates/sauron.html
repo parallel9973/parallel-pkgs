@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div id="home" class="banner-area">
+        <div class="bg-overlay black"></div>
+        <div class="containter">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="welcome-text" style="padding-top: 200px">
+                        <h1 class="wow fadeInDown" data-wow-delay="0.4s">Sauron</h1>
+                        <img class="sauron-eye name-area fadeInDown" src="../static/imgs/sauron-eye.png"
+                             style="max-height: 60px;">
+
+                        <div class="name-area wow fadeInDown" data-wow-delay="0.2s">Upload a pair list file</div>
+
+                        <!--Download Sample File-->
+                        <a href="{{ sample.url }}" id="sauron-download" class="sauron-sample-btn wow fadeInDown"
+                           data-wow-delay="0.6s">Download Sample</a>
+
+                        <!--Upload Excel File Button-->
+                        <script>
+
+                        </script>
+                        <form id="list-form" action="{% url "upload" %}" method="post" enctype="multipart/form-data" style="display:inline">
+                            {% csrf_token %}
+                            <a id="list-form-btn" class="sauron-upload-btn wow fadeInDown"
+                               data-wow-delay="0.8s">Upload</a>
+                            <input onchange="this.parentNode.submit()" id="list-form-file" type="file" title="Upload excel file" name="excel_file"
+                                   required="required" style="display:none;">
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% for row in excel_data %}
+        {% for cell in row %}
+            {{ cell }}&nbsp;&nbsp;
+        {% endfor %}
+        <br>
+    {% endfor %}
+
+    <div id="about" class="about-area section-padding" style="background-color: #191919">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 col-sn-8 col-xs-12 wow fadeInLeft" data-wow-delay="0.2s">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
